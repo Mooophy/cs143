@@ -67,7 +67,7 @@ DARROW          =>
   * Keywords are case-insensitive except for the values true and false,
   * which must begin with a lower-case letter.
   */
-
+[0-9]+			{ cool_yylval.symbol = inttable.add_string(yytext); return INT_CONST; }	//experiment
 
  /*
   *  String constants (C syntax)
