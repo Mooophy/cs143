@@ -4,18 +4,18 @@ using Text = System.Text;
 
 public sealed class Scanner
 {
-	private readonly Collections.IList<object> result;
+    private readonly Collections.IList<object> result;
 
     public Scanner(IO.TextReader input)
-	{
-		this.result = new Collections.List<object>();
-		this.Scan(input);
-	}
+    {
+        this.result = new Collections.List<object>();
+        this.Scan(input);
+    }
 
-	public Collections.IList<object> Tokens
-	{
-		get { return this.result; }
-	}
+    public Collections.IList<object> Tokens
+    {
+        get { return this.result; }
+    }
 
     #region ArithmiticConstants
 
@@ -30,126 +30,126 @@ public sealed class Scanner
 
     #endregion
 
-	private void Scan(IO.TextReader input)
-	{
-		while (input.Peek() != -1)
-		{
-			char ch = (char)input.Peek();
+    private void Scan(IO.TextReader input)
+    {
+        while (input.Peek() != -1)
+        {
+            char ch = (char)input.Peek();
 
             // Scan individual tokens
-			if (char.IsWhiteSpace(ch))
-			{
-				// eat the current char and skip ahead!
-				input.Read();
-			}
-			else if (char.IsLetter(ch) || ch == '_')
-			{
-				// keyword or identifier
+            if (char.IsWhiteSpace(ch))
+            {
+                // eat the current char and skip ahead!
+                input.Read();
+            }
+            else if (char.IsLetter(ch) || ch == '_')
+            {
+                // keyword or identifier
 
-				Text.StringBuilder accum = new Text.StringBuilder();
+                Text.StringBuilder accum = new Text.StringBuilder();
 
-				while (char.IsLetter(ch) || ch == '_')
-				{
-					accum.Append(ch);
-					input.Read();
+                while (char.IsLetter(ch) || ch == '_')
+                {
+                    accum.Append(ch);
+                    input.Read();
 
-					if (input.Peek() == -1)
-					{
-						break;
-					}
-					else
-					{
-						ch = (char)input.Peek();
-					}
-				}
+                    if (input.Peek() == -1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        ch = (char)input.Peek();
+                    }
+                }
 
-				this.result.Add(accum.ToString());
-			}
+                this.result.Add(accum.ToString());
+            }
             else if (ch == '"')
-			{
-				// string literal
-				Text.StringBuilder accum = new Text.StringBuilder();
+            {
+                // string literal
+                Text.StringBuilder accum = new Text.StringBuilder();
 
-				input.Read(); // skip the '"'
+                input.Read(); // skip the '"'
 
                 if (input.Peek() == -1)
-				{
-					throw new System.Exception("unterminated string literal");
-				}
+                {
+                    throw new System.Exception("unterminated string literal");
+                }
 
-				while ((ch = (char)input.Peek()) != '"')
-				{
-					accum.Append(ch);
-					input.Read();
+                while ((ch = (char)input.Peek()) != '"')
+                {
+                    accum.Append(ch);
+                    input.Read();
 
-					if (input.Peek() == -1)
-					{
-						throw new System.Exception("unterminated string literal");
-					}
-				}
+                    if (input.Peek() == -1)
+                    {
+                        throw new System.Exception("unterminated string literal");
+                    }
+                }
 
-				// skip the terminating "
-				input.Read();
-				this.result.Add(accum);
-			}
-			else if (char.IsDigit(ch))
-			{
-				// numeric literal
+                // skip the terminating "
+                input.Read();
+                this.result.Add(accum);
+            }
+            else if (char.IsDigit(ch))
+            {
+                // numeric literal
 
-				Text.StringBuilder accum = new Text.StringBuilder();
+                Text.StringBuilder accum = new Text.StringBuilder();
 
-				while (char.IsDigit(ch))
-				{
-					accum.Append(ch);
-					input.Read();
+                while (char.IsDigit(ch))
+                {
+                    accum.Append(ch);
+                    input.Read();
 
-					if (input.Peek() == -1)
-					{
-						break;
-					}
-					else
-					{
-						ch = (char)input.Peek();
-					}
-				}
+                    if (input.Peek() == -1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        ch = (char)input.Peek();
+                    }
+                }
 
-				this.result.Add(int.Parse(accum.ToString()));
-			}
-			else switch (ch)
-			{
-				case '+':
-					input.Read();
-					this.result.Add(Scanner.Add);
-					break;
+                this.result.Add(int.Parse(accum.ToString()));
+            }
+            else switch (ch)
+                {
+                    case '+':
+                        input.Read();
+                        this.result.Add(Scanner.Add);
+                        break;
 
-				case '-':
-					input.Read();
-					this.result.Add(Scanner.Sub);
-					break;
+                    case '-':
+                        input.Read();
+                        this.result.Add(Scanner.Sub);
+                        break;
 
-				case '*':
-					input.Read();
-					this.result.Add(Scanner.Mul);
-					break;
+                    case '*':
+                        input.Read();
+                        this.result.Add(Scanner.Mul);
+                        break;
 
-				case '/':
-					input.Read();
-					this.result.Add(Scanner.Div);
-					break;
+                    case '/':
+                        input.Read();
+                        this.result.Add(Scanner.Div);
+                        break;
 
-				case '=':
-					input.Read();
-					this.result.Add(Scanner.Equal);
-					break;
+                    case '=':
+                        input.Read();
+                        this.result.Add(Scanner.Equal);
+                        break;
 
-				case ';':
-					input.Read();
-					this.result.Add(Scanner.Semi);
-					break;
+                    case ';':
+                        input.Read();
+                        this.result.Add(Scanner.Semi);
+                        break;
 
-				default:
-					throw new System.Exception("Scanner encountered unrecognized character '" + ch + "'");
-			}
+                    default:
+                        throw new System.Exception("Scanner encountered unrecognized character '" + ch + "'");
+                }
         }
     }
 }
