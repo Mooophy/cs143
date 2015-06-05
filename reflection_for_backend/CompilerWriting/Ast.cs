@@ -6,9 +6,7 @@
 	| print <expr>
 	| <stmt> ; <stmt>
   */
-public abstract class Stmt
-{
-}
+public abstract class Stmt{}
 
 // var <ident> = <expr>
 public class DeclareVar : Stmt
@@ -57,9 +55,7 @@ public class Sequence : Stmt
  *  | <arith_expr>
  *  | <ident>
  */
-public abstract class Expr
-{
-}
+public abstract class Expr{}
 
 // <string> := " <string_elem>* "
 public class StringLiteral : Expr

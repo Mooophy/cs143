@@ -188,9 +188,7 @@ public sealed class CodeGen
                 throw new System.Exception("can't coerce a " + deliveredType.Name + " to a " + expectedType.Name);
             }
         }
-
     }
-
 
 
     private System.Type TypeOfExpr(Expr expr)
