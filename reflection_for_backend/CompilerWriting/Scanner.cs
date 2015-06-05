@@ -116,40 +116,40 @@ public sealed class Scanner
                 this.result.Add(int.Parse(accum.ToString()));
             }
             else switch (ch)
-                {
-                    case '+':
-                        input.Read();
-                        this.result.Add(Scanner.Add);
-                        break;
+            {
+                case '+':
+                    input.Read();
+                    this.result.Add(Scanner.Add);
+                    break;
 
-                    case '-':
-                        input.Read();
-                        this.result.Add(Scanner.Sub);
-                        break;
+                case '-':
+                    input.Read();
+                    this.result.Add(Scanner.Sub);
+                    break;
 
-                    case '*':
-                        input.Read();
-                        this.result.Add(Scanner.Mul);
-                        break;
+                case '*':
+                    input.Read();
+                    this.result.Add(Scanner.Mul);
+                    break;
 
-                    case '/':
-                        input.Read();
-                        this.result.Add(Scanner.Div);
-                        break;
+                case '/':
+                    input.Read();
+                    this.result.Add(Scanner.Div);
+                    break;
 
-                    case '=':
-                        input.Read();
-                        this.result.Add(Scanner.Equal);
-                        break;
+                case '=':
+                    input.Read();
+                    this.result.Add(Scanner.Equal);
+                    break;
 
-                    case ';':
-                        input.Read();
-                        this.result.Add(Scanner.Semi);
-                        break;
+                case ';':
+                    input.Read();
+                    this.result.Add(Scanner.Semi);
+                    break;
 
-                    default:
-                        throw new System.Exception("Scanner encountered unrecognized character '" + ch + "'");
-                }
+                default:
+                    throw new System.Exception("Scanner encountered unrecognized character '" + ch + "'");
+            }
         }
     }
 }
