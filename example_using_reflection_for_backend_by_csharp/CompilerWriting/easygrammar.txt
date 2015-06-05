@@ -1,0 +1,17 @@
+stmt =
+	for ident = expr to expr do stmt end
+	stmt; stmt
+	var ident = expr
+	ident = expr
+	read_int ident
+	print expr
+
+expr =
+	string literal
+	arithmetic expression
+	ident
+	
+demo progs:
+
+print "hello, world"
+
