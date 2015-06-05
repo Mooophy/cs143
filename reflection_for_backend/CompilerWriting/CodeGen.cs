@@ -119,10 +119,6 @@ public sealed class CodeGen
 		{
 			throw new System.Exception("don't know how to gen a " + stmt.GetType().Name);
 		}
-
-
-
-
 	}    
     	
     private void Store(string name, System.Type type)

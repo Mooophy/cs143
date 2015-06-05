@@ -64,35 +64,35 @@ public abstract class Expr
 // <string> := " <string_elem>* "
 public class StringLiteral : Expr
 {
-	public string Value;
+    public string Value;
 }
 
 // <int> := <digit>+
 public class IntLiteral : Expr
 {
-	public int Value;
+    public int Value;
 }
 
 // <ident> := <char> <ident_rest>*
 // <ident_rest> := <char> | <digit>
 public class Variable : Expr
 {
-	public string Ident;
+    public string Ident;
 }
 
 // <bin_expr> := <expr> <bin_op> <expr>
 public class BinExpr : Expr
 {
-	public Expr Left;
-	public Expr Right;
-	public BinOp Op;
+    public Expr Left;
+    public Expr Right;
+    public BinOp Op;
 }
 
 // <bin_op> := + | - | * | /
 public enum BinOp
 {
-	Add,
-	Sub,
-	Mul,
-	Div
+    Add,
+    Sub,
+    Mul,
+    Div
 }

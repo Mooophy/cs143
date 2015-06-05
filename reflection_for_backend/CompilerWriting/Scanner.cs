@@ -150,7 +150,6 @@ public sealed class Scanner
 				default:
 					throw new System.Exception("Scanner encountered unrecognized character '" + ch + "'");
 			}
-
         }
     }
 }
