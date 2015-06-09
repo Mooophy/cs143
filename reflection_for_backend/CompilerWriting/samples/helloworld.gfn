@@ -1,2 +1,2 @@
-  var x = "hello world!;
+  var x = "hello world!";
   print x;

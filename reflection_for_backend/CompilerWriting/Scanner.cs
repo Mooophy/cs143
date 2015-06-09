@@ -17,6 +17,14 @@ public sealed class Scanner
         get { return this.result; }
     }
 
+    public override string ToString()
+    {
+        var str = new Text.StringBuilder();
+        foreach (var obj in this.result)
+            str.Append("[" + obj.ToString() + "]");
+        return str.ToString();
+    }
+
     #region ArithmiticConstants
 
     // Constants to represent arithmitic tokens. This could
@@ -77,7 +85,7 @@ public sealed class Scanner
                     throw new System.Exception("unterminated string literal");
                 }
 
-                while ((ch = (char)input.Peek()) != '"')
+                while ((ch = (char)input.Peek()) != '"')// "
                 {
                     accum.Append(ch);
                     input.Read();
