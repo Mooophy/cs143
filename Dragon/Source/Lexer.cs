@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Source
 {
@@ -70,7 +71,11 @@ namespace Source
         public override string ToString() { return "" + this.Value; }
     }
 
-    class Lexer
+    public class Lexer
     {
+        //char _peek;
+        //HashSet<Word> _words;
+        //public long Line { get; private set; }   
+
     }
 }
