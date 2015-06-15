@@ -34,32 +34,40 @@ namespace Source
     public class Token
     {
         public readonly int TagValue;
-
-        public Token(int t) 
-        { 
-            this.TagValue = t; 
-        }
-
-        public override string ToString() 
-        { 
-            return "" + this.TagValue; 
-        }
+        public Token(int t) { this.TagValue = t; }
+        public override string ToString() { return "" + this.TagValue; }
     }
 
     public class Num : Token
     {
         public readonly int Value;
+        public Num(int v): base(Tag.NUM) { this.Value = v; }
+        public override string ToString() { return "" + this.Value; }
+    }
 
-        public Num(int v) 
-            : base(Tag.NUM) 
-        { 
-            this.Value = v; 
-        }
-        
-        public override string ToString()
-        {
-            return "" + this.Value;
-        }
+    public class Word : Token
+    {
+        public readonly string Lexeme;
+        public Word(string s, int t) : base(t) { this.Lexeme = s; }
+        public override string ToString() { return this.Lexeme; }
+        public readonly static Word
+            and     =   new Word("&&", Tag.AND),
+            or      =   new Word("||", Tag.OR),
+            eq      =   new Word("==", Tag.EQ),
+            ne      =   new Word("!=", Tag.NE),
+            le      =   new Word("<=", Tag.LE),
+            ge      =   new Word(">=", Tag.GE),
+            minus   =   new Word("minus", Tag.MINUS),
+            True    =   new Word("true", Tag.TRUE),
+            False   =   new Word("false", Tag.FALSE),
+            temp    =   new Word("t", Tag.TEMP);
+    }
+
+    public class Real : Token
+    {
+        public readonly float Value;
+        public Real(float v) : base(Tag.REAL) { this.Value = v; }
+        public override string ToString() { return "" + this.Value; }
     }
 
     class Lexer
