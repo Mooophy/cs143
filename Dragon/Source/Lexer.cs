@@ -31,6 +31,13 @@ namespace Source
             WHILE   =   275;
     }
 
+    public class Token
+    {
+        public readonly int TagValue;
+        public Token(int t) { this.TagValue = t; }
+        public override string ToString() { return "" + this.TagValue; }
+    }
+
     class Lexer
     {
     }
