@@ -34,8 +34,28 @@ namespace Source
     public class Token
     {
         public readonly int TagValue;
-        public Token(int t) { this.TagValue = t; }
-        public override string ToString() { return "" + this.TagValue; }
+        public Token(int t) 
+        { 
+            this.TagValue = t; 
+        }
+        public override string ToString() 
+        { 
+            return "" + this.TagValue; 
+        }
+    }
+
+    public class Num : Token
+    {
+        public readonly int Value;
+        public Num(int v) 
+            : base(Tag.NUM) 
+        { 
+            this.Value = v; 
+        }
+        public override string ToString()
+        {
+            return "" + this.Value;
+        }
     }
 
     class Lexer
