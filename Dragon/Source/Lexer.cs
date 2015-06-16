@@ -108,7 +108,7 @@ namespace Dragon
 
         void reserve(Word w)
         {
-            this._words.Add(w.Lexeme, w); 
+            _words.Add(w.Lexeme, w); 
         }
         public Lexer(TextReader r)
         {
@@ -180,7 +180,7 @@ namespace Dragon
                     return this.ReadChar('=') ? Word.ge : new Token('>');
             }
 
-            //for number
+            //for numbers
             if (char.IsDigit(_curr))
             {
                 int v = 0;
