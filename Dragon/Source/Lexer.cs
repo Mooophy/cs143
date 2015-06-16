@@ -125,8 +125,6 @@ namespace Dragon
 
         public Token scan()
         {
-            if (this.EofReached) return null;
-
             for (; ; this.ReadChar())
             {
                 if (_curr == ' ' || _curr == '\t') continue;
@@ -171,16 +169,22 @@ namespace Dragon
                 return new Real(f);
             }
 
-            if (char.IsLetter(this._curr))
+            if (char.IsLetter(_curr))
             {
-                var str = new StringBuilder();
+                var b = new StringBuilder();
                 do
                 {
-                    str.Append((char)this._curr);
+                    b.Append(_curr);
                     this.ReadChar();
-                } while (char.IsLetterOrDigit((char)this._curr));
-
+                } while (char.IsLetterOrDigit(_curr));
+                var s = b.ToString();
+                if (_words.ContainsKey(s)) return _words[s];
+                else return _words[s] = new Word(s, Tag.ID);
             }
+
+            var tok = new Token(_curr);
+            _curr = ' ';
+            return tok;
         }
     }
 }
