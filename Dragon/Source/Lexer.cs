@@ -112,51 +112,60 @@ namespace Dragon
             return true;
         }
 
-        public Token scan()
-        {
-            for(;;this.ReadChar())
-            {
-                if (this._curr == ' ' || this._curr == '\t') continue;
-                else if (this._curr == '\n') ++Line;
-                else break;
-            }
+        //public Token scan()
+        //{
+        //    for(;;this.ReadChar())
+        //    {
+        //        if (this._curr == ' ' || this._curr == '\t') continue;
+        //        else if (this._curr == '\n') ++Line;
+        //        else break;
+        //    }
 
-            switch (this._curr)
-            {
-                case '&': 
-                    return this.ReadChar('&') ? Word.and : new Token('&'); 
-                case '|':
-                    return this.ReadChar('|') ? Word.or : new Token('|');
-                case '=':
-                    return this.ReadChar('=') ? Word.eq : new Token('=');
-                case '!':
-                    return this.ReadChar('=') ? Word.ne : new Token('!');
-                case '<':
-                    return this.ReadChar('=') ? Word.le : new Token('<');
-                case '>':
-                    return this.ReadChar('=') ? Word.ge : new Token('>');
-            }
+        //    switch (this._curr)
+        //    {
+        //        case '&': 
+        //            return this.ReadChar('&') ? Word.and : new Token('&'); 
+        //        case '|':
+        //            return this.ReadChar('|') ? Word.or : new Token('|');
+        //        case '=':
+        //            return this.ReadChar('=') ? Word.eq : new Token('=');
+        //        case '!':
+        //            return this.ReadChar('=') ? Word.ne : new Token('!');
+        //        case '<':
+        //            return this.ReadChar('=') ? Word.le : new Token('<');
+        //        case '>':
+        //            return this.ReadChar('=') ? Word.ge : new Token('>');
+        //    }
 
-            if(char.IsDigit((char)this._curr))
-            {
-                int v = 0;
-                do{
-                    v = 10 * v + (int)(this._curr - 48);
-                    this.ReadChar();
-                } while (char.IsDigit((char)this._curr));
-                if (this._curr != '.') return new Num(v);
+        //    if(char.IsDigit((char)this._curr))
+        //    {
+        //        int v = 0;
+        //        do{
+        //            v = 10 * v + (int)(this._curr - 48);
+        //            this.ReadChar();
+        //        } while (char.IsDigit((char)this._curr));
+        //        if (this._curr != '.') return new Num(v);
                 
-                float f = v, d = 10;
-                for(;;){
-                    this.ReadChar();
-                    if (!char.IsDigit((char)this._curr)) break;
-                    f += (int)(this._curr - 48) / d;
-                    d *= 10;
-                }
-                return new Real(f);
-            }
+        //        float f = v, d = 10;
+        //        for(;;){
+        //            this.ReadChar();
+        //            if (!char.IsDigit((char)this._curr)) break;
+        //            f += (int)(this._curr - 48) / d;
+        //            d *= 10;
+        //        }
+        //        return new Real(f);
+        //    }
 
+        //    if(char.IsLetter((char)this._curr))
+        //    {
+        //        var str = new StringBuilder();
+        //        do
+        //        {
+        //            str.Append((char)this._curr);
+        //            this.ReadChar();
+        //        } while (char.IsLetterOrDigit((char)this._curr));
 
-        }
+        //    }
+        //}
     }
 }
