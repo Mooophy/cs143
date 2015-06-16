@@ -53,6 +53,12 @@
     <Compile Include="TestLexer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Source\Dragon.csproj">
+      <Project>{7a1ec6b0-8b27-480e-bd94-414b33850fb6}</Project>
+      <Name>Dragon</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

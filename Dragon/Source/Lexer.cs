@@ -208,7 +208,8 @@ namespace Dragon
                 var b = new StringBuilder();
                 do
                 {
-                    b.Append(_curr); this.ReadChar();
+                    b.Append(_curr); 
+                    this.ReadChar();
                 } while (char.IsLetterOrDigit(_curr));
                 var s = b.ToString();
                 if (_words.ContainsKey(s)) return _words[s];
