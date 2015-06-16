@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Dragon
 {
@@ -73,9 +74,42 @@ namespace Dragon
 
     public class Lexer
     {
-        //char _peek;
-        //HashSet<Word> _words;
-        //public long Line { get; private set; }   
+        TextReader _reader;
+        int _curr; // i.e. peek in dragon book
+        public int Line { get; private set; }
+        Dictionary<string, Word> _words;
+        void reserve(Word w) { this._words.Add(w.Lexeme, w); }
+        public Lexer(TextReader r)
+        {
+            reserve(new Word("if",      Tag.IF));
+            reserve(new Word("else",    Tag.ELSE));
+            reserve(new Word("while",   Tag.WHILE));
+            reserve(new Word("do",      Tag.DO));
+            reserve(new Word("break",   Tag.BREAK));
+            reserve(Word.True);
+            reserve(Word.False);
+            reserve(Type.Int);
+            reserve(Type.Char);
+            reserve(Type.Bool);
+            reserve(Type.Float);
 
+            this._reader = r;
+            this._curr = ' ';
+            _words = new Dictionary<string, Word>();
+        }
+
+        void ReadChar()
+        {
+            try { this._curr = this._reader.Read(); }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+        }
+
+        bool ReadChar(char ch)
+        {
+            this.ReadChar();
+            if (_curr != ch) return false;
+            this._curr = ' ';
+            return true;
+        }
     }
 }
