@@ -95,7 +95,7 @@ namespace Dragon
 
             this._reader = r;
             this._curr = ' ';
-            _words = new Dictionary<string, Word>();
+            this._words = new Dictionary<string, Word>();
         }
 
         void ReadChar()
@@ -110,6 +110,32 @@ namespace Dragon
             if (_curr != ch) return false;
             this._curr = ' ';
             return true;
+        }
+
+        public Token scan()
+        {
+            for(;;this.ReadChar())
+            {
+                if (this._curr == ' ' || this._curr == '\t') continue;
+                else if (this._curr == '\n') ++Line;
+                else break;
+            }
+
+            switch (this._curr)
+            {
+                case '&': 
+                    return this.ReadChar('&') ? Word.and : new Token('&'); 
+                case '|':
+                    return this.ReadChar('|') ? Word.or : new Token('|');
+                case '=':
+                    return this.ReadChar('=') ? Word.eq : new Token('=');
+                case '!':
+                    return this.ReadChar('=') ? Word.ne : new Token('!');
+                case '<':
+                    return this.ReadChar('=') ? Word.le : new Token('<');
+                case '>':
+                    return this.ReadChar('=') ? Word.ge : new Token('>');
+            }
         }
     }
 }
