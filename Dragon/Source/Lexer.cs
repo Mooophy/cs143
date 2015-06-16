@@ -62,10 +62,10 @@ namespace Dragon
     public class Word : Token
     {
         public readonly string Lexeme;
-        public Word(string s, char t) 
-            : base(t) 
+        public Word(string lexeme, char tag) 
+            : base(tag) 
         { 
-            this.Lexeme = s; 
+            this.Lexeme = lexeme; 
         }
         public override string ToString() 
         {
