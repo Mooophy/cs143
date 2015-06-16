@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Dragon
@@ -75,9 +74,11 @@ namespace Dragon
     public class Lexer
     {
         TextReader _reader;
-        int _curr; // i.e. peek in dragon book
+        char _curr; // i.e. peek in dragon book
+        public bool EofReached { get; private set; }
         public int Line { get; private set; }
         Dictionary<string, Word> _words;
+
         void reserve(Word w) { this._words.Add(w.Lexeme, w); }
         public Lexer(TextReader r)
         {
@@ -100,72 +101,86 @@ namespace Dragon
 
         void ReadChar()
         {
-            try { this._curr = this._reader.Read(); }
-            catch (Exception e) { Console.WriteLine(e.Message); }
+            try 
+            {
+                if (-1 == this._reader.Peek()) 
+                    this.EofReached = true;
+                else 
+                    this._curr = (char)this._reader.Read(); 
+            }
+            catch (Exception e) 
+            { 
+                Console.WriteLine(e.Message); 
+            }
         }
 
         bool ReadChar(char ch)
         {
+            if (this.EofReached) return false;
             this.ReadChar();
             if (_curr != ch) return false;
             this._curr = ' ';
             return true;
         }
 
-        //public Token scan()
-        //{
-        //    for(;;this.ReadChar())
-        //    {
-        //        if (this._curr == ' ' || this._curr == '\t') continue;
-        //        else if (this._curr == '\n') ++Line;
-        //        else break;
-        //    }
+        public Token scan()
+        {
+            if (this.EofReached) return null;
 
-        //    switch (this._curr)
-        //    {
-        //        case '&': 
-        //            return this.ReadChar('&') ? Word.and : new Token('&'); 
-        //        case '|':
-        //            return this.ReadChar('|') ? Word.or : new Token('|');
-        //        case '=':
-        //            return this.ReadChar('=') ? Word.eq : new Token('=');
-        //        case '!':
-        //            return this.ReadChar('=') ? Word.ne : new Token('!');
-        //        case '<':
-        //            return this.ReadChar('=') ? Word.le : new Token('<');
-        //        case '>':
-        //            return this.ReadChar('=') ? Word.ge : new Token('>');
-        //    }
+            for (; ; this.ReadChar())
+            {
+                if (_curr == ' ' || _curr == '\t') continue;
+                else if (_curr == '\n') ++Line;
+                else break;
+            }
 
-        //    if(char.IsDigit((char)this._curr))
-        //    {
-        //        int v = 0;
-        //        do{
-        //            v = 10 * v + (int)(this._curr - 48);
-        //            this.ReadChar();
-        //        } while (char.IsDigit((char)this._curr));
-        //        if (this._curr != '.') return new Num(v);
-                
-        //        float f = v, d = 10;
-        //        for(;;){
-        //            this.ReadChar();
-        //            if (!char.IsDigit((char)this._curr)) break;
-        //            f += (int)(this._curr - 48) / d;
-        //            d *= 10;
-        //        }
-        //        return new Real(f);
-        //    }
+            switch (_curr)
+            {
+                case '&':
+                    return this.ReadChar('&') ? Word.and : new Token('&');
+                case '|':
+                    return this.ReadChar('|') ? Word.or : new Token('|');
+                case '=':
+                    return this.ReadChar('=') ? Word.eq : new Token('=');
+                case '!':
+                    return this.ReadChar('=') ? Word.ne : new Token('!');
+                case '<':
+                    return this.ReadChar('=') ? Word.le : new Token('<');
+                case '>':
+                    return this.ReadChar('=') ? Word.ge : new Token('>');
+            }
 
-        //    if(char.IsLetter((char)this._curr))
-        //    {
-        //        var str = new StringBuilder();
-        //        do
-        //        {
-        //            str.Append((char)this._curr);
-        //            this.ReadChar();
-        //        } while (char.IsLetterOrDigit((char)this._curr));
+            if (char.IsDigit(_curr))
+            {
+                int v = 0;
+                do
+                {
+                    v = 10 * v + (int)(_curr - '0');
+                    this.ReadChar();
+                } while (char.IsDigit(_curr));
+                if (_curr != '.') return new Num(v);
 
-        //    }
-        //}
+                float f = v, d = 10;
+                for (; ; )
+                {
+                    this.ReadChar();
+                    if (!char.IsDigit(_curr)) break;
+                    f += (int)(_curr - 48) / d;
+                    d *= 10;
+                }
+                return new Real(f);
+            }
+
+            if (char.IsLetter(this._curr))
+            {
+                var str = new StringBuilder();
+                do
+                {
+                    str.Append((char)this._curr);
+                    this.ReadChar();
+                } while (char.IsLetterOrDigit((char)this._curr));
+
+            }
+        }
     }
 }
