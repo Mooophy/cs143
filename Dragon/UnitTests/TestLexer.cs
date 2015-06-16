@@ -31,5 +31,12 @@ namespace UnitTests
             Assert.AreEqual(274, Tag.TRUE);
             Assert.AreEqual(275, Tag.WHILE);
         }
+
+        [TestMethod]
+        public void TestToken()
+        {
+            //var tok = new Token(42);
+            //Assert.AreEqual()
+        }
     }
 }

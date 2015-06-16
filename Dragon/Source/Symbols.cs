@@ -9,7 +9,7 @@ namespace Dragon
     public class Type : Word
     {
         public int Width;
-        public Type(string s, int t, int w) : base(s, t) { this.Width = w; }
+        public Type(string s, char t, int w) : base(s, t) { this.Width = w; }
         public readonly static Type
             Int     =   new Type("int",     Tag.BASIC, 4),
             Float   =   new Type("float",   Tag.BASIC, 8),
