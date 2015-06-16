@@ -43,5 +43,21 @@ namespace UnitTests
             Assert.AreEqual('9', tok_9.TagValue);
             Assert.AreEqual("9", tok_9.ToString());
         }
+
+        [TestMethod]
+        public void TestNum()
+        {
+            var num_0 = new Num(0);
+            Assert.AreEqual(Tag.NUM, num_0.TagValue);
+            Assert.AreEqual(0, num_0.Value);
+
+            var num_42 = new Num(42);
+            Assert.AreEqual(Tag.NUM, num_42.TagValue);
+            Assert.AreEqual(42, num_42.Value);
+
+            var num_10000 = new Num(10000);
+            Assert.AreEqual(Tag.NUM, num_10000.TagValue);
+            Assert.AreEqual(10000, num_10000.Value);
+        }
     }
 }

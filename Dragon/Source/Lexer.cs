@@ -47,8 +47,8 @@ namespace Dragon
 
     public class Num : Token
     {
-        public readonly char Value;
-        public Num(char v)
+        public readonly int Value;
+        public Num(int v)
             : base(Tag.NUM) 
         { 
             this.Value = v; 
@@ -189,7 +189,7 @@ namespace Dragon
                     v = 10 * v + (int)(_curr - '0');
                     this.ReadChar();
                 } while (char.IsDigit(_curr));
-                if (_curr != '.') return new Num((char)v);
+                if (_curr != '.') return new Num(v);
 
                 float f = v, d = 10;
                 for (; ; )
