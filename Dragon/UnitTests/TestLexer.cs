@@ -35,8 +35,13 @@ namespace UnitTests
         [TestMethod]
         public void TestToken()
         {
-            //var tok = new Token(42);
-            //Assert.AreEqual()
+            var tok_c = new Token('c');
+            Assert.AreEqual('c', tok_c.TagValue);
+            Assert.AreEqual("c", tok_c.ToString());
+
+            var tok_9 = new Token('9');
+            Assert.AreEqual('9', tok_9.TagValue);
+            Assert.AreEqual("9", tok_9.ToString());
         }
     }
 }
