@@ -136,6 +136,27 @@ namespace Dragon
                 case '>':
                     return this.ReadChar('=') ? Word.ge : new Token('>');
             }
+
+            if(char.IsDigit((char)this._curr))
+            {
+                int v = 0;
+                do{
+                    v = 10 * v + (int)(this._curr - 48);
+                    this.ReadChar();
+                } while (char.IsDigit((char)this._curr));
+                if (this._curr != '.') return new Num(v);
+                
+                float f = v, d = 10;
+                for(;;){
+                    this.ReadChar();
+                    if (!char.IsDigit((char)this._curr)) break;
+                    f += (int)(this._curr - 48) / d;
+                    d *= 10;
+                }
+                return new Real(f);
+            }
+
+
         }
     }
 }
