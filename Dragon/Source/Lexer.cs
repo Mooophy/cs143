@@ -35,22 +35,42 @@ namespace Dragon
     public class Token
     {
         public readonly int TagValue;
-        public Token(int t) { this.TagValue = t; }
-        public override string ToString() { return "" + this.TagValue; }
+        public Token(int t) 
+        { 
+            this.TagValue = t; 
+        }
+        public override string ToString() 
+        {
+            return "" + this.TagValue; 
+        }
     }
 
     public class Num : Token
     {
         public readonly int Value;
-        public Num(int v): base(Tag.NUM) { this.Value = v; }
-        public override string ToString() { return "" + this.Value; }
+        public Num(int v)
+            : base(Tag.NUM) 
+        { 
+            this.Value = v; 
+        }
+        public override string ToString() 
+        { 
+            return "" + this.Value; 
+        }
     }
 
     public class Word : Token
     {
         public readonly string Lexeme;
-        public Word(string s, int t) : base(t) { this.Lexeme = s; }
-        public override string ToString() { return this.Lexeme; }
+        public Word(string s, int t) 
+            : base(t) 
+        { 
+            this.Lexeme = s; 
+        }
+        public override string ToString() 
+        {
+            return this.Lexeme; 
+        }
         public readonly static Word
             and     =   new Word("&&", Tag.AND),
             or      =   new Word("||", Tag.OR),
@@ -67,8 +87,15 @@ namespace Dragon
     public class Real : Token
     {
         public readonly float Value;
-        public Real(float v) : base(Tag.REAL) { this.Value = v; }
-        public override string ToString() { return "" + this.Value; }
+        public Real(float v) 
+            : base(Tag.REAL) 
+        {
+            this.Value = v; 
+        }
+        public override string ToString() 
+        { 
+            return "" + this.Value; 
+        }
     }
 
     public class Lexer
@@ -79,7 +106,10 @@ namespace Dragon
         public int Line { get; private set; }
         Dictionary<string, Word> _words;
 
-        void reserve(Word w) { this._words.Add(w.Lexeme, w); }
+        void reserve(Word w)
+        {
+            this._words.Add(w.Lexeme, w); 
+        }
         public Lexer(TextReader r)
         {
             reserve(new Word("if",      Tag.IF));
@@ -125,6 +155,7 @@ namespace Dragon
 
         public Token scan()
         {
+            //for white spaces
             for (; ; this.ReadChar())
             {
                 if (_curr == ' ' || _curr == '\t') continue;
@@ -132,6 +163,7 @@ namespace Dragon
                 else break;
             }
 
+            //for operators like && !=, etc
             switch (_curr)
             {
                 case '&':
@@ -148,6 +180,7 @@ namespace Dragon
                     return this.ReadChar('=') ? Word.ge : new Token('>');
             }
 
+            //for number
             if (char.IsDigit(_curr))
             {
                 int v = 0;
@@ -169,13 +202,13 @@ namespace Dragon
                 return new Real(f);
             }
 
+            //for identifiers
             if (char.IsLetter(_curr))
             {
                 var b = new StringBuilder();
                 do
                 {
-                    b.Append(_curr);
-                    this.ReadChar();
+                    b.Append(_curr); this.ReadChar();
                 } while (char.IsLetterOrDigit(_curr));
                 var s = b.ToString();
                 if (_words.ContainsKey(s)) return _words[s];
