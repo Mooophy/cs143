@@ -79,5 +79,13 @@ namespace UnitTests
             Assert.AreEqual("foo", w.ToString());
             Assert.AreEqual(Tag.ID, w.TagValue);
         }
+
+        [TestMethod]
+        public void TestReal()
+        {
+            var r = new Real(42.00f);
+            Assert.AreEqual(Tag.REAL, r.TagValue);
+            Assert.AreEqual("42", r.ToString());
+        }
     }
 }
