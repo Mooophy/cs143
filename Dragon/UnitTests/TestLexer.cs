@@ -103,7 +103,7 @@ namespace UnitTests
                 tokens.Add(lex.scan());
             reader.Close();
 
-            Assert.AreEqual(2, lex.Line);
+            Assert.AreEqual(2, Lexer.Line);
             Assert.AreEqual(3, tokens.Count);
             Assert.IsNull(tokens[2]);// the last one is null
         }
@@ -120,7 +120,7 @@ namespace UnitTests
                 var lex = new Lexer(reader);
                 while (!lex.EofReached)
                     tokens.Add(lex.scan());
-                Assert.AreEqual(7, lex.Line);
+                Assert.AreEqual(7, Lexer.Line);
             }
             
             Assert.AreEqual(22, tokens.Count);

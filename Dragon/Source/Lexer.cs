@@ -103,7 +103,7 @@ namespace Dragon
         StreamReader _reader;
         char _curr; // i.e. peek in dragon book
         public bool EofReached { get; private set; }
-        public int Line { get; private set; }
+        public static int Line { get; private set; }
         Dictionary<string, Word> _words;
 
         void reserve(Word w)
@@ -112,7 +112,7 @@ namespace Dragon
         }
         public Lexer(StreamReader r)
         {
-            this.Line = 1;
+            Lexer.Line = 1;
             this._reader = r;
             this._curr = ' ';
             this._words = new Dictionary<string, Word>();
