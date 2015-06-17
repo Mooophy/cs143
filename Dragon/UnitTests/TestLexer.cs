@@ -73,6 +73,11 @@ namespace UnitTests
             Assert.AreEqual(Tag.OR, Word.or.TagValue);          Assert.AreEqual("||", Word.or.Lexeme);
             Assert.AreEqual(Tag.TEMP, Word.temp.TagValue);      Assert.AreEqual("t", Word.temp.Lexeme);
             Assert.AreEqual(Tag.TRUE, Word.True.TagValue);      Assert.AreEqual("true", Word.True.Lexeme);
+
+            var w = new Word("foo", Tag.ID);
+            Assert.AreEqual("foo", w.Lexeme);
+            Assert.AreEqual("foo", w.ToString());
+            Assert.AreEqual(Tag.ID, w.TagValue);
         }
     }
 }
