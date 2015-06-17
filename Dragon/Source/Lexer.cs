@@ -112,6 +112,11 @@ namespace Dragon
         }
         public Lexer(StreamReader r)
         {
+            this.Line = 1;
+            this._reader = r;
+            this._curr = ' ';
+            this._words = new Dictionary<string, Word>();
+
             reserve(new Word("if",      Tag.IF));
             reserve(new Word("else",    Tag.ELSE));
             reserve(new Word("while",   Tag.WHILE));
@@ -123,25 +128,29 @@ namespace Dragon
             reserve(Type.Char);
             reserve(Type.Bool);
             reserve(Type.Float);
-
-            this._reader = r;
-            this._curr = ' ';
-            this._words = new Dictionary<string, Word>();
         }
 
-        void ReadChar()
+        bool ReadChar()
         {
             try 
             {
-                if (-1 == this._reader.Peek()) 
+                if (-1 == this._reader.Peek())
+                {
                     this.EofReached = true;
-                else 
-                    this._curr = (char)this._reader.Read(); 
+                    return false;
+                }
+                else
+                {
+                    this._curr = (char)this._reader.Read();
+                    return true;
+                }
             }
             catch (Exception e) 
             { 
                 Console.WriteLine(e.Message); 
             }
+
+            return true;
         }
 
         bool ReadChar(char ch)
@@ -156,10 +165,18 @@ namespace Dragon
         public Token scan()
         {
             //for white spaces
-            for (; ; this.ReadChar())
+            for (; !this.EofReached; this.ReadChar())
             {
-                if (_curr == ' ' || _curr == '\t') continue;
-                else if (_curr == '\n') ++Line;
+                if (_curr == ' ' || _curr == '\t')
+                { 
+                    continue; 
+                }
+                else if (_curr == '\r')
+                {
+                    this.ReadChar();    //eat \r    
+                    //this.ReadChar();    //eat \n
+                    ++Line; 
+                }
                 else break;
             }
 

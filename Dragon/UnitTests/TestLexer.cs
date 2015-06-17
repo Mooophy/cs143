@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Dragon;
 
@@ -92,10 +93,21 @@ namespace UnitTests
         [TestMethod]
         public void TestLexerClass()
         {
-            string path = @"..\..\..\TestSamples\code1.txt";
+            string path = @"..\..\..\TestSamples\code1.cpp";
             Assert.IsTrue(File.Exists(path));
-
             var reader = new StreamReader(path);
+            //var content = reader.ReadToEnd();
+            //Assert.AreEqual('{', content[0]);
+            //Assert.AreEqual('\r', content[1]);
+            //Assert.AreEqual('\n', content[2]);
+            //Assert.AreEqual('\t', content[3]);
+
+
+            var lex = new Lexer(reader);
+            var tokens = new List<Token>();
+            while (!lex.EofReached)
+                tokens.Add(lex.scan());
+            reader.Close();
         }
     }
 }
