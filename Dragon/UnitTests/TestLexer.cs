@@ -96,18 +96,15 @@ namespace UnitTests
             string path = @"..\..\..\TestSamples\code1.cpp";
             Assert.IsTrue(File.Exists(path));
             var reader = new StreamReader(path);
-            //var content = reader.ReadToEnd();
-            //Assert.AreEqual('{', content[0]);
-            //Assert.AreEqual('\r', content[1]);
-            //Assert.AreEqual('\n', content[2]);
-            //Assert.AreEqual('\t', content[3]);
-
 
             var lex = new Lexer(reader);
             var tokens = new List<Token>();
             while (!lex.EofReached)
                 tokens.Add(lex.scan());
             reader.Close();
-        }
+
+            Assert.AreEqual(2, lex.Line);
+            Assert.AreEqual(3, tokens.Count);
+            Assert.IsNull(tokens[2]);
     }
 }

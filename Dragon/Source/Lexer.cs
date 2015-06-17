@@ -174,11 +174,12 @@ namespace Dragon
                 else if (_curr == '\r')
                 {
                     this.ReadChar();    //eat \r    
-                    //this.ReadChar();    //eat \n
                     ++Line; 
                 }
                 else break;
             }
+
+            if (this.EofReached) return null;
 
             //for operators like && !=, etc
             switch (_curr)
@@ -233,8 +234,9 @@ namespace Dragon
                 else return _words[s] = new Word(s, Tag.ID);
             }
 
+            //for the rest 
             var tok = new Token(_curr);
-            _curr = ' ';
+            if (!this.EofReached) _curr = ' ';
             return tok;
         }
     }
