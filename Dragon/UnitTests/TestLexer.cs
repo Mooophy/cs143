@@ -125,6 +125,12 @@ namespace UnitTests
             
             Assert.AreEqual(22, tokens.Count);
             Assert.IsNull(tokens[21]);// the last one is null
+            var expect = new List<string> 
+            { 
+                "{", "int", "i", "=", "42",";", "if", "(", "i", ">", "0", ")","{", "i", "=", "i", "+", "55", ";", "}", "}" 
+            };
+            for (int i = 0; i != tokens.Count - 1; ++i)
+                Assert.AreEqual(expect[i], tokens[i].ToString());
         }
     }
 }
