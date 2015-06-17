@@ -14,6 +14,7 @@ namespace Dragon
     {
         int _lexLine;
         static int _labels = 0;
+
         Node() 
         { 
             _lexLine = Lexer.Line; 
