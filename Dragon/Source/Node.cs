@@ -22,7 +22,7 @@ namespace Dragon
 
         void Error(string msg)
         {
-            throw new Exception(msg);
+            throw new Exception("near line " + _lexLine + ": " + msg);
         }
 
         public int NewLable()
