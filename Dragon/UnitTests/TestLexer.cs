@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Dragon;
 
@@ -86,6 +87,15 @@ namespace UnitTests
             var r = new Real(42.00f);
             Assert.AreEqual(Tag.REAL, r.TagValue);
             Assert.AreEqual("42", r.ToString());
+        }
+
+        [TestMethod]
+        public void TestLexerClass()
+        {
+            string path = @"..\..\..\TestSamples\code1.txt";
+            Assert.IsTrue(File.Exists(path));
+
+            var reader = new StreamReader(path);
         }
     }
 }

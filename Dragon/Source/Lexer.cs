@@ -100,7 +100,7 @@ namespace Dragon
 
     public class Lexer
     {
-        TextReader _reader;
+        StreamReader _reader;
         char _curr; // i.e. peek in dragon book
         public bool EofReached { get; private set; }
         public int Line { get; private set; }
@@ -110,7 +110,7 @@ namespace Dragon
         {
             _words.Add(w.Lexeme, w); 
         }
-        public Lexer(TextReader r)
+        public Lexer(StreamReader r)
         {
             reserve(new Word("if",      Tag.IF));
             reserve(new Word("else",    Tag.ELSE));
