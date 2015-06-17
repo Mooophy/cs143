@@ -35,10 +35,12 @@ namespace Dragon
     public class Token
     {
         public readonly char TagValue;
+
         public Token(char t) 
         { 
             this.TagValue = t; 
         }
+
         public override string ToString() 
         {
             return this.TagValue.ToString();
@@ -48,11 +50,13 @@ namespace Dragon
     public class Num : Token
     {
         public readonly int Value;
+
         public Num(int v)
             : base(Tag.NUM) 
         { 
             this.Value = v; 
         }
+
         public override string ToString() 
         { 
             return this.Value.ToString(); 
@@ -62,15 +66,18 @@ namespace Dragon
     public class Word : Token
     {
         public readonly string Lexeme;
+
         public Word(string lexeme, char tag) 
             : base(tag) 
         { 
             this.Lexeme = lexeme; 
         }
+
         public override string ToString() 
         {
             return this.Lexeme; 
         }
+
         public readonly static Word
             and     =   new Word("&&", Tag.AND),
             or      =   new Word("||", Tag.OR),
@@ -87,11 +94,13 @@ namespace Dragon
     public class Real : Token
     {
         public readonly float Value;
+
         public Real(float v) 
             : base(Tag.REAL) 
         {
             this.Value = v; 
         }
+
         public override string ToString() 
         { 
             return this.Value.ToString(); 
@@ -110,6 +119,7 @@ namespace Dragon
         {
             _words.Add(w.Lexeme, w); 
         }
+
         public Lexer(StreamReader r)
         {
             Lexer.Line = 1;
