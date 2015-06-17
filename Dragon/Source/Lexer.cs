@@ -41,7 +41,7 @@ namespace Dragon
         }
         public override string ToString() 
         {
-            return "" + this.TagValue; 
+            return this.TagValue.ToString();
         }
     }
 
@@ -55,7 +55,7 @@ namespace Dragon
         }
         public override string ToString() 
         { 
-            return "" + this.Value; 
+            return this.Value.ToString(); 
         }
     }
 
@@ -94,7 +94,7 @@ namespace Dragon
         }
         public override string ToString() 
         { 
-            return "" + this.Value; 
+            return this.Value.ToString(); 
         }
     }
 
