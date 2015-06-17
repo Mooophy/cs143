@@ -91,7 +91,7 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void TestLexerClass()
+        public void TestLexer1()
         {
             string path = @"..\..\..\TestSamples\code1.cpp";
             Assert.IsTrue(File.Exists(path));
@@ -105,7 +105,26 @@ namespace UnitTests
 
             Assert.AreEqual(2, lex.Line);
             Assert.AreEqual(3, tokens.Count);
-            Assert.IsNull(tokens[2]);
+            Assert.IsNull(tokens[2]);// the last one is null
+        }
+
+        [TestMethod]
+        public void TestLexer2()
+        {
+            string path = @"..\..\..\TestSamples\code2.cpp";
+            Assert.IsTrue(File.Exists(path));
+
+            var tokens = new List<Token>();
+            using( var reader = new StreamReader(path))
+            {
+                var lex = new Lexer(reader);
+                while (!lex.EofReached)
+                    tokens.Add(lex.scan());
+                Assert.AreEqual(7, lex.Line);
+            }
+            
+            Assert.AreEqual(22, tokens.Count);
+            Assert.IsNull(tokens[21]);// the last one is null
         }
     }
 }
