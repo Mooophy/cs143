@@ -65,16 +65,16 @@ namespace UnitTests
         [TestMethod]
         public void TestWord()
         {
-            Assert.AreEqual(Tag.AND, Word.and.TagValue);        Assert.AreEqual("&&", Word.and.Lexeme);
-            Assert.AreEqual(Tag.EQ, Word.eq.TagValue);          Assert.AreEqual("==", Word.eq.Lexeme);
-            Assert.AreEqual(Tag.FALSE, Word.False.TagValue);    Assert.AreEqual("false", Word.False.Lexeme);
-            Assert.AreEqual(Tag.GE, Word.ge.TagValue);          Assert.AreEqual(">=", Word.ge.Lexeme);
-            Assert.AreEqual(Tag.LE, Word.le.TagValue);          Assert.AreEqual("<=", Word.le.Lexeme);
-            Assert.AreEqual(Tag.MINUS, Word.minus.TagValue);    Assert.AreEqual("minus", Word.minus.Lexeme);
-            Assert.AreEqual(Tag.NE, Word.ne.TagValue);          Assert.AreEqual("!=", Word.ne.Lexeme);
-            Assert.AreEqual(Tag.OR, Word.or.TagValue);          Assert.AreEqual("||", Word.or.Lexeme);
-            Assert.AreEqual(Tag.TEMP, Word.temp.TagValue);      Assert.AreEqual("t", Word.temp.Lexeme);
-            Assert.AreEqual(Tag.TRUE, Word.True.TagValue);      Assert.AreEqual("true", Word.True.Lexeme);
+            Assert.AreEqual(Tag.AND, Word.and.TagValue); Assert.AreEqual("&&", Word.and.Lexeme);
+            Assert.AreEqual(Tag.EQ, Word.eq.TagValue); Assert.AreEqual("==", Word.eq.Lexeme);
+            Assert.AreEqual(Tag.FALSE, Word.False.TagValue); Assert.AreEqual("false", Word.False.Lexeme);
+            Assert.AreEqual(Tag.GE, Word.ge.TagValue); Assert.AreEqual(">=", Word.ge.Lexeme);
+            Assert.AreEqual(Tag.LE, Word.le.TagValue); Assert.AreEqual("<=", Word.le.Lexeme);
+            Assert.AreEqual(Tag.MINUS, Word.minus.TagValue); Assert.AreEqual("minus", Word.minus.Lexeme);
+            Assert.AreEqual(Tag.NE, Word.ne.TagValue); Assert.AreEqual("!=", Word.ne.Lexeme);
+            Assert.AreEqual(Tag.OR, Word.or.TagValue); Assert.AreEqual("||", Word.or.Lexeme);
+            Assert.AreEqual(Tag.TEMP, Word.temp.TagValue); Assert.AreEqual("t", Word.temp.Lexeme);
+            Assert.AreEqual(Tag.TRUE, Word.True.TagValue); Assert.AreEqual("true", Word.True.Lexeme);
 
             var w = new Word("foo", Tag.ID);
             Assert.AreEqual("foo", w.Lexeme);
@@ -106,5 +106,6 @@ namespace UnitTests
             Assert.AreEqual(2, lex.Line);
             Assert.AreEqual(3, tokens.Count);
             Assert.IsNull(tokens[2]);
+        }
     }
 }
