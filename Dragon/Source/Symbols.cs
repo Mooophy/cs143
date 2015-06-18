@@ -26,5 +26,17 @@ namespace Dragon
         {
             return type == Type.Char || type == Type.Int || type == Type.Float; 
         }
+
+        public static Type Max(Type lhs, Type rhs)
+        {
+            if (!Type.Numeric(lhs) || !Type.Numeric(rhs))
+                return null;
+            else if (lhs == Type.Float || rhs == Type.Float)
+                return Type.Float;
+            else if (lhs == Type.Int || rhs == Type.Int)
+                return Type.Int;
+            else
+                return Type.Char;
+        }
     }
 }
