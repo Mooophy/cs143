@@ -31,5 +31,12 @@ namespace UnitTests
             Console.WriteLine();
             expr.Jumping(10, 20);
         }
+
+        [TestMethod]
+        public void TestId()
+        {
+            var id = new Id(new Word("some_var", Tag.ID), Dragon.Type.Int, 42);
+            Assert.AreEqual(42, id.Offset);
+        }
     }
 }
