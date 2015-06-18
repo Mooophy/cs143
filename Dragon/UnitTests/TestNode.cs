@@ -5,10 +5,10 @@ using Dragon;
 namespace UnitTests
 {
     [TestClass]
-    public class TestNodeFile
+    public class TestNode
     {
         [TestMethod]
-        public void TestNode()
+        public void TestNodeClass()
         {
             var node = new Node();
             Assert.AreEqual(1, node.NewLable());

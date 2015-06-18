@@ -7,7 +7,7 @@ using Dragon;
 namespace UnitTests
 {
     [TestClass]
-    public class TestLexerFile
+    public class TestLexer
     {
         [TestMethod]
         public void TestTag()
