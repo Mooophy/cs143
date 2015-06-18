@@ -94,4 +94,15 @@ namespace Dragon
             return this.Op.ToString();
         }
     }
+
+    
+    public class Id : Expr
+    {
+        public int Offset { get; set; }
+        public Id(Word id, Dragon.Type type, int offset)
+            : base(id, type)
+        {
+            this.Offset = offset;
+        }
+    }
 }
