@@ -10,10 +10,10 @@ namespace Dragon
     {
         public int Width;
 
-        public Type(string s, char t, int w) 
-            : base(s, t) 
+        public Type(string typeName, char tag, int width) 
+            : base(typeName, tag) 
         { 
-            this.Width = w; 
+            this.Width = width; 
         }
 
         public readonly static Type

@@ -30,6 +30,15 @@ namespace UnitTests
             Assert.IsTrue(Dragon.Type.Numeric(Dragon.Type.Float));
             Assert.IsTrue(Dragon.Type.Numeric(Dragon.Type.Char));
             Assert.IsFalse(Dragon.Type.Numeric(Dragon.Type.Bool));
+
+            var list = new Dragon.Type("list", Tag.BASIC, 4);
+            Assert.AreEqual("list", list.Lexeme);
+            Assert.AreEqual(Tag.BASIC, list.TagValue);
+            Assert.AreEqual(4, list.Width);
+
+            Assert.AreEqual(Dragon.Type.Float, Dragon.Type.Max(Dragon.Type.Float, Dragon.Type.Int));
+            Assert.AreEqual(Dragon.Type.Int, Dragon.Type.Max(Dragon.Type.Char, Dragon.Type.Int));
+            Assert.IsNull(Dragon.Type.Max(Dragon.Type.Bool, Dragon.Type.Float));
         }
     }
 }
