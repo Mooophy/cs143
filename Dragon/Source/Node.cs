@@ -47,7 +47,7 @@ namespace Dragon
         public Token Op { get; set; }
         public Type Type { get; set; }
 
-        public Expr(Token tok, Type type)
+        public Expr(Token tok, Type type) //private on book
         {
             this.Op = tok;
             this.Type = type;
@@ -72,7 +72,8 @@ namespace Dragon
         {
             if(t != 0 && f != 0)
             {
-                this.Emit("if " + test + " goto L" + t); this.Emit("goto L" + f);
+                this.Emit("if " + test + " goto L" + t); 
+                this.Emit("goto L" + f);
             }
             else if(t != 0)
             {
