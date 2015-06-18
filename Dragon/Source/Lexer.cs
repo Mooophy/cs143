@@ -32,6 +32,7 @@ namespace Dragon
             WHILE   =   (char)275;
     }
 
+
     public class Token
     {
         public readonly char TagValue;
@@ -46,6 +47,7 @@ namespace Dragon
             return this.TagValue.ToString();
         }
     }
+
 
     public class Num : Token
     {
@@ -62,6 +64,7 @@ namespace Dragon
             return this.Value.ToString(); 
         }
     }
+
 
     public class Word : Token
     {
@@ -91,6 +94,7 @@ namespace Dragon
             temp    =   new Word("t", Tag.TEMP);
     }
 
+
     public class Real : Token
     {
         public readonly float Value;
@@ -106,6 +110,7 @@ namespace Dragon
             return this.Value.ToString(); 
         }
     }
+
 
     public class Lexer
     {
