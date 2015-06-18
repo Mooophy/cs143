@@ -68,20 +68,20 @@ namespace Dragon
             this.EmitJumps(this.ToString(), t, f);
         }
 
-        public void EmitJumps(string test, int t, int f)
+        public void EmitJumps(string test, int lineForTrue, int lineForFalse)
         {
-            if(t != 0 && f != 0)
+            if(lineForTrue != 0 && lineForFalse != 0)
             {
-                this.Emit("if " + test + " goto L" + t); 
-                this.Emit("goto L" + f);
+                this.Emit("if " + test + " goto L" + lineForTrue); 
+                this.Emit("goto L" + lineForFalse);
             }
-            else if(t != 0)
+            else if(lineForTrue != 0)
             {
-                this.Emit("if " + test + " goto L" + t);
+                this.Emit("if " + test + " goto L" + lineForTrue);
             }
-            else if(f != 0)
+            else if(lineForFalse != 0)
             {
-                this.Emit("iffalse " + test + " goto L" + f);
+                this.Emit("iffalse " + test + " goto L" + lineForFalse);
             }
             else
             {
