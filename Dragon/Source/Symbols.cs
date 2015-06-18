@@ -6,6 +6,31 @@ using System.Threading.Tasks;
 
 namespace Dragon
 {
+    public class Env
+    {
+        private Dictionary<Token, Id> _table;
+        protected Env _prev;
+
+        public Env(Env prev)
+        {
+            _table = new Dictionary<Token, Id>();
+            _prev = prev;
+        }
+
+        public void Add(Token tok, Id id)
+        {
+            _table.Add(tok, id);
+        }
+
+        public Id Get(Token tok)
+        {
+            for(var env = this; env != null; env = env._prev)
+                if (_table.Keys.Contains(tok)) return _table[tok];
+            return null;
+        }
+    }
+
+
     public class Type : Word
     {
         public int Width;
