@@ -105,4 +105,34 @@ namespace Dragon
             this.Offset = offset;
         }
     }
+
+    public class Temp : Expr
+    {
+        static int Count = 0;
+        int _number;
+
+        public Temp(Type type)
+            : base(Word.temp, type)
+        {
+            this._number = ++Temp.Count;
+        }
+
+        public override string ToString()
+        {
+            return "t" + _number;
+        }
+    }
+
+    //public class Op : Expr
+    //{
+    //    public Op(Token tok, Type type)
+    //        : base(tok, type)
+    //    { }
+
+    //    public Expr Reduce()
+    //    {
+    //        Expr x = this.Gen();
+
+    //    }
+    //}
 }
