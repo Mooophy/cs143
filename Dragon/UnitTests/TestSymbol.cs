@@ -40,5 +40,19 @@ namespace UnitTests
             Assert.AreEqual(Dragon.Type.Int, Dragon.Type.Max(Dragon.Type.Char, Dragon.Type.Int));
             Assert.IsNull(Dragon.Type.Max(Dragon.Type.Bool, Dragon.Type.Float));
         }
+
+        [TestMethod]
+        public void TestEnv()
+        {
+            var global = new Env(null);
+            var main = new Env(global);
+
+            var tok = new Word("some_var", Tag.ID);
+            var id = new Id(tok, Dragon.Type.Int, 0xff);
+            global.Add(tok, id);
+            
+            Assert.ReferenceEquals(id, main.Get(tok));
+            Assert.IsNull(global.Get(new Token(Tag.ID)));
+        }
     }
 }
