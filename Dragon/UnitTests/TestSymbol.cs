@@ -54,5 +54,15 @@ namespace UnitTests
             Assert.ReferenceEquals(id, main.Get(tok));
             Assert.IsNull(global.Get(new Token(Tag.ID)));
         }
+
+        [TestMethod]
+        public void TestArray()
+        {
+            var arr = new Dragon.Array(42, Dragon.Type.Float);
+
+            Assert.AreEqual(Dragon.Type.Float, arr.Of);
+            Assert.AreEqual(42, arr.Size);
+            Assert.AreEqual("[42]float", arr.ToString());
+        }
     }
 }
