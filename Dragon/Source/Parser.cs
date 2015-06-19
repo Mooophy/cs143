@@ -28,7 +28,8 @@ namespace Dragon
 
         public void Error(string msg)
         {
-            throw new Exception(msg);
+            //note The book here is lex.line, but Line is static member, so this might be a bug.
+            throw new Exception("near line " + Lexer.Line + ": " + msg);//note
         }
 
         public void Match(int tag)
