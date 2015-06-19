@@ -64,4 +64,23 @@ namespace Dragon
                 return Type.Char;
         }
     }
+
+
+    public class Array : Type
+    {
+        public Type Of;
+        public int Size;
+        
+        public Array(int sz, Type type)
+            : base("[]",Tag.INDEX, sz * type.Width)
+        {
+            this.Size = sz;
+            this.Of = type;
+        }
+
+        public override string ToString()
+        {
+            return "[" + this.Size + "]" + this.Of.ToString();
+        }
+    }
 }
