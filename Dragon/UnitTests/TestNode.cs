@@ -38,5 +38,15 @@ namespace UnitTests
             var id = new Id(new Word("some_var", Tag.ID), Dragon.Type.Int, 42);
             Assert.AreEqual(42, id.Offset);
         }
+
+        [TestMethod]
+        public void TestTemp()
+        {
+            var temp = new Temp(Dragon.Type.Float);
+            Assert.AreEqual("t1", temp.ToString());
+
+            var another_temp = new Temp(Dragon.Type.Int);
+            Assert.AreEqual("t2", another_temp.ToString());
+        }
     }
 }
