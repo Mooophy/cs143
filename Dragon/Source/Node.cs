@@ -58,7 +58,7 @@ namespace Dragon
             return this;
         }
 
-        public Expr Reduce()
+        public virtual Expr Reduce()
         {
             return this;
         }
@@ -123,16 +123,18 @@ namespace Dragon
         }
     }
 
-    //public class Op : Expr
-    //{
-    //    public Op(Token tok, Type type)
-    //        : base(tok, type)
-    //    { }
+    public class Op : Expr
+    {
+        public Op(Token tok, Type type)
+            : base(tok, type)
+        { }
 
-    //    public Expr Reduce()
-    //    {
-    //        Expr x = this.Gen();
-
-    //    }
-    //}
+        public override Expr Reduce()
+        {
+            Expr expr = this.Gen();
+            Temp temp = new Temp(this.Type);
+            this.Emit(temp.ToString() + " = " + expr.ToString());
+            return temp;
+        }
+    }
 }
