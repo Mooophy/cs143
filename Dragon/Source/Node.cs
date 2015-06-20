@@ -20,7 +20,7 @@ namespace Dragon
             _lexLine = Lexer.Line; 
         }
 
-        void Error(string msg)
+        public void Error(string msg)
         {
             throw new Exception("near line " + _lexLine + ": " + msg);
         }
