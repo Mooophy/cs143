@@ -68,4 +68,35 @@ namespace Dragon
             this.Stmt2.Gen(lable2, after);
         }
     }
+
+
+    public class While : Stmt
+    {
+        public Expr Expr;
+        public Stmt Stmt;
+
+        public While()
+        {
+            this.Expr = null;
+            this.Stmt = null;
+        }
+
+        public void Init(Expr expr, Stmt stmt)
+        {
+            this.Expr = expr;
+            this.Stmt = stmt;
+            if (this.Expr.Type != Type.Bool)
+                this.Expr.Error("boolean requried in while");
+        }
+
+        public override void Gen(int beginning, int after)
+        {
+            this.After = after;             //save after
+            this.Expr.Jumping(0, after);
+            int label = this.NewLable();    //label for stmt
+            this.EmitLabel(label);
+            this.Gen(label, beginning);
+            this.Emit("goto L " + beginning);
+        }
+    }
 }
