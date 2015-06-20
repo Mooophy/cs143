@@ -95,7 +95,7 @@ namespace Dragon
             this.Expr.Jumping(0, after);
             int label = this.NewLable();    //label for stmt
             this.EmitLabel(label);
-            this.Gen(label, beginning);
+            this.Stmt.Gen(label, beginning);
             this.Emit("goto L " + beginning);
         }
     }
