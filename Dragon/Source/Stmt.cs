@@ -16,10 +16,12 @@ namespace Dragon
         public static Stmt Enclosing = Stmt.Null;
     }
 
+
     public class If : Stmt
     {
         public Expr Expr;
         public Stmt Stmt;
+
         public If(Expr expr, Stmt stmt)
         {
             this.Expr = expr;
@@ -34,6 +36,36 @@ namespace Dragon
             this.Expr.Jumping(0, after);    //fall through on true, goto "after" on false
             this.EmitLabel(lable);
             this.Stmt.Gen(lable, after);
+        }
+    }
+
+
+    public class Else : Stmt
+    {
+        public Expr Expr;
+        public Stmt Stmt1, Stmt2;
+
+        public Else(Expr expr, Stmt stmt1, Stmt stmt2)
+        {
+            this.Expr = expr;
+            this.Stmt1 = stmt1;
+            this.Stmt2 = stmt2;
+            if (this.Expr.Type != Dragon.Type.Bool)
+                this.Expr.Error("boolean required in if");
+        }
+
+        public override void Gen(int beginning, int after)
+        {
+            int label1 = this.NewLable();
+            int lable2 = this.NewLable();
+            this.Expr.Jumping(0, lable2);
+
+            this.EmitLabel(label1);
+            this.Stmt1.Gen(label1, after);
+            this.Emit("goto L" + after);
+
+            this.EmitLabel(lable2);
+            this.Stmt2.Gen(lable2, after);
         }
     }
 }
