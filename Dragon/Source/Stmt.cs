@@ -160,12 +160,34 @@ namespace Dragon
 
 
     //assignment for an array element
-    //public class SetElem : Stmt
-    //{
-    //    public Id Array;
-    //    public Expr Index;
-    //    public Expr Expr;
+    public class SetElem : Stmt
+    {
+        public Id Array;
+        public Expr Index;
+        public Expr Expr;
 
-    //    public SetElem()
-    //}
+        public SetElem(Access access, Expr expr)
+        {
+            this.Array = access.Array;
+            this.Index = access.Index;
+            this.Expr = expr;
+            if (null == this.Check(this.Expr.Type, this.Expr.Type))
+                this.Error("type error");
+        }
+
+        public Type Check(Type lhs, Type rhs)
+        {
+            if (lhs is Array || rhs is Array) return null;
+            else if (lhs == rhs) return rhs;
+            else if (Dragon.Type.Numeric(lhs) && Dragon.Type.Numeric(rhs)) return rhs;
+            else return null;
+        }
+
+        public override void Gen(int beginning, int after)
+        {
+            string s1 = this.Index.Reduce().ToString();
+            string s2 = this.Expr.Reduce().ToString();
+            this.Emit(this.Array.ToString() + " [ " + s1 + " ] = " + s2);
+        }
+    }
 }
