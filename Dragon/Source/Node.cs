@@ -196,4 +196,29 @@ namespace Dragon
             return this.ExprLeft.ToString() + " " + this.Op.ToString() + " " + this.ExprRight.ToString();
         }
     }
+
+
+    public class Unary : Op
+    {
+        public Expr Expr;
+        
+        public Unary(Token tok, Expr expr)
+            : base(tok, null)
+        {
+            this.Expr = expr;
+            this.Type = Dragon.Type.Max(Dragon.Type.Int, this.Expr.Type);
+            if (this.Type == null)
+                this.Error("type error");
+        }
+
+        public override Expr Gen()
+        {
+            return new Unary(this.Op, this.Expr.Reduce());
+        }
+
+        public override string ToString()
+        {
+            return this.Op.ToString() + " " + this.Expr.ToString();
+        }
+    }
 }
