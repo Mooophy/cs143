@@ -190,4 +190,35 @@ namespace Dragon
             this.Emit(this.Array.ToString() + " [ " + s1 + " ] = " + s2);
         }
     }
+
+    public class Seq : Stmt 
+    {
+        public Stmt Stmt1;
+        public Stmt Stmt2;
+        
+        public Seq(Stmt stmt1, Stmt stmt2)
+        {
+            this.Stmt1 = stmt1;
+            this.Stmt2 = stmt2;
+        }
+
+        public override void Gen(int beginning, int after)
+        {
+            if (this.Stmt1 == Stmt.Null)
+            {
+                this.Stmt2.Gen(beginning, after);
+            }
+            else if (this.Stmt2 == Stmt.Null)
+            {
+                this.Stmt2.Gen(beginning, after); 
+            }
+            else
+            {
+                int label = this.NewLable();
+                this.Stmt1.Gen(beginning, label);
+                this.EmitLabel(label);
+                this.Stmt2.Gen(label, after);
+            }
+        }
+    }
 }
