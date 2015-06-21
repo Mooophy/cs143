@@ -100,6 +100,7 @@ namespace Dragon
         }
     }
 
+
     public class Do : Stmt
     {
         public Expr Expr;
@@ -126,6 +127,34 @@ namespace Dragon
             this.Stmt.Gen(beginning, label);
             this.EmitLabel(label);
             this.Expr.Jumping(beginning, 0);
+        }
+    }
+
+
+    //for assignment
+    public class Set : Stmt
+    {
+        public Id Id;
+        public Expr Expr;
+
+        public Set(Id id, Expr expr)
+        {
+            this.Id = id;
+            this.Expr = expr;
+            if( null == this.Check(this.Id.Type, this.Expr.Type))
+                this.Error("type error");
+        }
+
+        public Type Check(Type lhs, Type rhs)
+        {
+            if (Dragon.Type.Numeric(lhs) && Dragon.Type.Numeric(rhs)) return rhs;//why rhs?
+            else if (lhs == Dragon.Type.Bool && rhs == Dragon.Type.Bool) return rhs;
+            else return null;
+        }
+
+        public override void Gen(int beginning, int after)
+        {
+            this.Emit(this.Id.ToString() + " = " + this.Expr.Gen().ToString());
         }
     }
 }
