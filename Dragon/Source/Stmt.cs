@@ -123,7 +123,7 @@ namespace Dragon
         {
             this.After = after;
             int label = this.NewLable();
-            this.Gen(beginning, label);
+            this.Stmt.Gen(beginning, label);
             this.EmitLabel(label);
             this.Expr.Jumping(beginning, 0);
         }
