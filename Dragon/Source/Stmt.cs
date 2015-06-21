@@ -171,7 +171,7 @@ namespace Dragon
             this.Array = access.Array;
             this.Index = access.Index;
             this.Expr = expr;
-            if (null == this.Check(this.Expr.Type, this.Expr.Type))
+            if (null == this.Check(access.Type, this.Expr.Type))
                 this.Error("type error");
         }
 
