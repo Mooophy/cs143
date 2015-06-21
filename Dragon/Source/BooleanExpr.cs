@@ -8,7 +8,7 @@ namespace Dragon
 {
     public class Constant : Expr
     {
-        public Constant (Token tok, Type type)
+        public Constant(Token tok, Dragon.Type type)
             : base(tok,type)
         { }
 
