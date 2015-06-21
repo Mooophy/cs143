@@ -191,6 +191,7 @@ namespace Dragon
         }
     }
 
+
     public class Seq : Stmt 
     {
         public Stmt Stmt1;
@@ -210,7 +211,7 @@ namespace Dragon
             }
             else if (this.Stmt2 == Stmt.Null)
             {
-                this.Stmt2.Gen(beginning, after); 
+                this.Stmt1.Gen(beginning, after); 
             }
             else
             {
