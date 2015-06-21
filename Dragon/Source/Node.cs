@@ -124,6 +124,7 @@ namespace Dragon
         }
     }
     
+
     // not tested yet
     public class Op : Expr
     {
@@ -139,6 +140,7 @@ namespace Dragon
             return temp;
         }
     }
+
 
     public class Access : Op
     {
@@ -165,6 +167,33 @@ namespace Dragon
         public override string ToString()
         {
             return this.Array.ToString() + " [ " + this.Index.ToString() + " ]";
+        }
+    }
+
+
+    public class Arith : Op
+    {
+        public Expr ExprLeft;
+        public Expr ExprRight;
+
+        public Arith(Token tok, Expr lhs, Expr rhs)
+            : base(tok, null)
+        {
+            this.ExprLeft = lhs;
+            this.ExprRight = rhs;
+            this.Type = Dragon.Type.Max(this.ExprLeft.Type, this.ExprRight.Type);
+            if (this.Type == null)
+                this.Error("type error");
+        }
+
+        public override Expr Gen()
+        {
+            return new Arith(this.Op, this.ExprLeft.Reduce(), this.ExprRight.Reduce());
+        }
+
+        public override string ToString()
+        {
+            return this.ExprLeft.ToString() + " " + this.Op.ToString() + " " + this.ExprRight.ToString();
         }
     }
 }
