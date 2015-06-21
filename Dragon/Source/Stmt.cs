@@ -157,4 +157,15 @@ namespace Dragon
             this.Emit(this.Id.ToString() + " = " + this.Expr.Gen().ToString());
         }
     }
+
+
+    //assignment for an array element
+    //public class SetElem : Stmt
+    //{
+    //    public Id Array;
+    //    public Expr Index;
+    //    public Expr Expr;
+
+    //    public SetElem()
+    //}
 }

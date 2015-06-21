@@ -53,7 +53,7 @@ namespace Dragon
             this.Type = type;
         }
 
-        public Expr Gen()
+        public virtual Expr Gen()
         {
             return this;
         }
@@ -63,7 +63,7 @@ namespace Dragon
             return this;
         }
 
-        public void Jumping(int t, int f)
+        public virtual void Jumping(int t, int f)
         {
             this.EmitJumps(this.ToString(), t, f);
         }
@@ -137,6 +137,34 @@ namespace Dragon
             Temp temp = new Temp(this.Type);
             this.Emit(temp.ToString() + " = " + expr.ToString());
             return temp;
+        }
+    }
+
+    public class Access : Op
+    {
+        public Id Array;
+        public Expr Index;
+
+        public Access(Id arr, Expr idx, Type type)
+            : base(new Word("[]", Tag.INDEX), type)
+        {
+            this.Array = arr;
+            this.Index = idx;
+        }
+
+        public override Expr Gen()
+        {
+            return new Access(this.Array, this.Index.Reduce(), this.Type);
+        }
+
+        public override void Jumping(int t, int f)
+        {
+            this.EmitJumps(this.Reduce().ToString(), t, f);
+        }
+
+        public override string ToString()
+        {
+            return this.Array.ToString() + " [ " + this.Index.ToString() + " ]";
         }
     }
 }
