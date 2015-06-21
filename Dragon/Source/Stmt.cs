@@ -221,5 +221,23 @@ namespace Dragon
                 this.Stmt2.Gen(label, after);
             }
         }
+
+
+        public class Break : Stmt
+        {
+            public Stmt Stmt;
+
+            public Break()
+            {
+                if (Stmt.Enclosing == null)
+                    this.Error("unenclosed break");
+                this.Stmt = Stmt.Enclosing;
+            }
+
+            public override void Gen(int beginning, int after)
+            {
+                this.Emit("goto L" + this.Stmt.After);
+            }
+        }
     }
 }
