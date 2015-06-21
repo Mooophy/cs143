@@ -99,4 +99,33 @@ namespace Dragon
             this.Emit("goto L " + beginning);
         }
     }
+
+    public class Do : Stmt
+    {
+        public Expr Expr;
+        public Stmt Stmt;
+
+        public Do()
+        {
+            this.Expr = null;
+            this.Stmt = null;
+        }
+
+        public void Init(Stmt stmt, Expr expr)
+        {
+            this.Expr = expr;
+            this.Stmt = stmt;
+            if (this.Expr.Type != Type.Bool)
+                this.Expr.Error("boolean requried in do");
+        }
+
+        public override void Gen(int beginning, int after)
+        {
+            this.After = after;
+            int label = this.NewLable();
+            this.Gen(beginning, label);
+            this.EmitLabel(label);
+            this.Expr.Jumping(beginning, 0);
+        }
+    }
 }
