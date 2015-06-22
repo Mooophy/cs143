@@ -40,6 +40,14 @@ namespace Dragon
         
         //..
 
+        public Dragon.Type Type()
+        {
+            var type = _look as Dragon.Type;    //expect _look.tag == Tag.Basic
+            this.Match(Tag.BASIC);
+
+            return _look.TagValue != '[' ? type : this.Dimension(type);
+        }
+
         public Dragon.Type Dimension(Dragon.Type type)
         {
             this.Match('[');
