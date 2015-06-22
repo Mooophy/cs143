@@ -103,4 +103,22 @@ namespace Dragon
                 this.EmitLabel(label);
         }
     }
+
+
+    public class Not : Logical
+    {
+        public Not(Token tok, Expr rhs)
+            : base(tok, rhs, rhs)
+        { }
+
+        public override void Jumping(int t, int f)
+        {
+            this.RhsExpr.Jumping(f, t);
+        }
+
+        public override string ToString()
+        {
+            return this.Op.ToString() + " " + RhsExpr.ToString();
+        }
+    }
 }
