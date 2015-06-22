@@ -77,7 +77,7 @@ namespace Dragon
             : base(tok, lhs, rhs)
         { }
 
-        public void Jumping(int t, int f)
+        public override void Jumping(int t, int f)
         {
             int label = t != 0 ? t : this.NewLable();
             this.LhsExpr.Jumping(label, 0);
