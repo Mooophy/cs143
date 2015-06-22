@@ -34,7 +34,7 @@ namespace Dragon
     {
         public Expr LhsExpr, RhsExpr;
 
-        Logical(Token tok, Expr lhs, Expr rhs)
+        public Logical(Token tok, Expr lhs, Expr rhs)
             : base(tok, null)
         {
             this.LhsExpr = lhs;
@@ -67,6 +67,23 @@ namespace Dragon
         public override string ToString()
         {
             return this.LhsExpr.ToString() + " " + this.Op.ToString() + " " + this.RhsExpr.ToString();
+        }
+    }
+
+
+    public class Or : Logical
+    {
+        public Or(Token tok, Expr lhs, Expr rhs)
+            : base(tok, lhs, rhs)
+        { }
+
+        public void Jumping(int t, int f)
+        {
+            int label = t != 0 ? t : this.NewLable();
+            this.LhsExpr.Jumping(label, 0);
+            this.RhsExpr.Jumping(t, f);
+            if (t == 0)
+                this.EmitLabel(label);
         }
     }
 }
