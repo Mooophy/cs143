@@ -39,5 +39,18 @@ namespace Dragon
         }
         
         //..
+
+        public Dragon.Type Dimension(Dragon.Type type)
+        {
+            this.Match('[');
+            Token tok = _look;
+            this.Match(Tag.NUM);
+            this.Match(']');
+
+            if (_look.TagValue == '[')
+                type = this.Dimension(type);
+
+            return new Array(((Num)tok).Value, type);
+        }
     }
 }
