@@ -86,4 +86,21 @@ namespace Dragon
                 this.EmitLabel(label);
         }
     }
+
+
+    public class And : Logical
+    {
+        public And(Token tok, Expr lhs, Expr rhs)
+            : base(tok, lhs, rhs)
+        { }
+
+        public override void Jumping(int t, int f)
+        {
+            int label = f != 0 ? f : this.NewLable();
+            this.LhsExpr.Jumping(0, label);
+            this.RhsExpr.Jumping(t, f);
+            if (f == 0)
+                this.EmitLabel(label);
+        }
+    }
 }
