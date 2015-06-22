@@ -28,4 +28,45 @@ namespace Dragon
                 this.Emit("goto L" + f);
         }
     }
+
+
+    public class Logical : Expr
+    {
+        public Expr LhsExpr, RhsExpr;
+
+        Logical(Token tok, Expr lhs, Expr rhs)
+            : base(tok, null)
+        {
+            this.LhsExpr = lhs;
+            this.RhsExpr = rhs;
+            if (null == this.Check(this.LhsExpr.Type, this.RhsExpr.Type))
+                this.Error("type error");
+        }
+
+        public Dragon.Type Check(Dragon.Type lhs, Dragon.Type rhs)
+        {
+            if (lhs == Dragon.Type.Bool && rhs == Dragon.Type.Bool) 
+                return Dragon.Type.Bool;
+            return null;
+        }
+
+        public override Expr Gen()
+        {
+            int f = this.NewLable();
+            int a = this.NewLable();
+            Temp temp = new Temp(this.Type);
+            this.Jumping(0, f);
+            this.Emit(temp.ToString() + " = true");
+            this.Emit("goto L" + a);
+            this.EmitLabel(f);
+            this.Emit(temp.ToString() + " = false");
+            this.EmitLabel(a);
+            return temp;
+        }
+
+        public override string ToString()
+        {
+            return this.LhsExpr.ToString() + " " + this.Op.ToString() + " " + this.RhsExpr.ToString();
+        }
+    }
 }
