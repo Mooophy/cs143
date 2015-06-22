@@ -121,4 +121,27 @@ namespace Dragon
             return this.Op.ToString() + " " + RhsExpr.ToString();
         }
     }
+
+
+    public class Rel : Logical
+    {
+        public Rel(Token tok, Expr lhs, Expr rhs)
+            : base(tok, lhs, rhs)
+        { }
+
+        public Dragon.Type check(Dragon.Type lft, Dragon.Type rht)
+        {
+            if (lft is Array || rht is Array) return null;
+            else if (lft == rht) return Dragon.Type.Bool;
+            else return null;
+        }
+
+        public override void Jumping(int t, int f)
+        {
+            Expr lft = this.LhsExpr.Reduce();
+            Expr rht = this.RhsExpr.Reduce();
+            string test = lft.ToString() + " " + this.Op.ToString() + " " + rht.ToString();
+            this.EmitJumps(test, t, f);
+        }
+    }
 }
