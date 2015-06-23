@@ -39,6 +39,21 @@ namespace Dragon
         }
         
         //..
+        public void Declaration()
+        {
+            while(_look.TagValue == Tag.BASIC)
+            {
+                var type = this.Type();
+                var tok = _look;
+                this.Match(Tag.ID);
+                this.Match(';');
+
+                var id = new Id(tok as Word, type, this.Used);
+                this.Top.Add(tok, id);
+                this.Used += type.Width;
+            }
+        }
+
 
         public Dragon.Type Type()
         {
