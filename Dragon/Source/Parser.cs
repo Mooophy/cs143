@@ -8,10 +8,12 @@ namespace Dragon
 {
     public class Parser
     {
+        #region Fields
         private Lexer _lexer;
         private Token _look;
         public Env Top;
         public int Used;
+        #endregion
 
         public Parser(Lexer lex)
         {
@@ -54,7 +56,6 @@ namespace Dragon
             }
         }
 
-
         public Dragon.Type Type()
         {
             var type = _look as Dragon.Type;    //expect _look.tag == Tag.Basic
@@ -75,5 +76,26 @@ namespace Dragon
 
             return new Array(((Num)tok).Value, type);
         }
+
+        //Stmts()
+
+        //Stmt()
+
+        //public Stmt Assign()
+        //{
+        //    Stmt stmt;
+        //    var tok = _look;
+
+        //    this.Match(Tag.ID);
+        //    var id = Top.Get(tok);
+        //    if (id == null)
+        //        this.Error(tok.ToString() + " undeclared");
+
+        //    if(_look.TagValue == '=')
+        //    {
+        //        this.Move();
+        //        stmt = new Set(id,)
+        //    }
+        //}     need method Bool() to continue
     }
 }
