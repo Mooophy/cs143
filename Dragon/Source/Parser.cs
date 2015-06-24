@@ -157,5 +157,107 @@ namespace Dragon
             }
             return expr;
         }
+
+        public Expr Term()
+        {
+            Expr expr = this.Unary();
+            while(_look.TagValue == '*' || _look.TagValue == '/')
+            {
+                Token tok = _look;
+                this.Move();
+                expr = new Arith(tok, expr, this.Unary());
+            }
+            return expr;
+        }
+
+        public Expr Unary()
+        {
+            if (_look.TagValue == '-')
+            {
+                this.Move();
+                return new Unary(Word.minus, this.Unary());
+            }
+            else if (_look.TagValue == '!')
+            {
+                Token tok = _look;
+                this.Move();
+                return new Not(tok, this.Unary());
+            }
+            else
+                return this.Factor();
+        }
+
+        public Expr Factor()
+        {
+            Expr expr = null;
+            switch(_look.TagValue)
+            {
+                case'(':
+                    this.Move();
+                    expr = this.Bool();
+                    this.Match(')');
+                    return expr;
+
+                case Tag.NUM:
+                    expr = new Constant(_look, Dragon.Type.Int);
+                    this.Move();
+                    return expr;
+
+                case Tag.REAL:
+                    expr = new Constant(_look, Dragon.Type.Float);
+                    this.Move();
+                    return expr;
+
+                case Tag.TRUE:
+                    expr = Constant.True;
+                    this.Move();
+                    return expr;
+
+                case Tag.FALSE:
+                    expr = Constant.False;
+                    this.Move();
+                    return expr;
+
+                default:
+                    this.Error("syntax error");
+                    return expr;
+
+                case Tag.ID:
+                    string s = _look.ToString();
+                    Id id = this.Top.Get(_look);
+                    if (id == null)
+                        this.Error(_look.ToString() + " undeclared");
+                    this.Move();
+                    if (_look.TagValue != '[')
+                        return id;
+                    else
+                        return this.Offset(id);
+            }
+        }
+
+        public Access Offset(Id a)
+        {
+            Expr i, w, t1, t2, loc;
+            Type type = a.Type;
+            this.Match('[');
+            i = this.Bool();
+            this.Match(']');
+            type = (type as Array).Of;
+            w = new Constant(type.Width);
+            t1 = new Arith(new Token('*'), i, w);
+            loc = t1;
+            while(_look.TagValue == '[')
+            {
+                this.Match('[');
+                i = this.Bool();
+                this.Match(']');
+                type = (type as Array).Of;
+                w = new Constant(type.Width);
+                t1 = new Arith(new Token('*'), i, w);
+                t2 = new Arith(new Token('+'), loc, t1);
+                loc = t2;
+            }
+            return new Access(a, loc, type);
+        }
     }
 }

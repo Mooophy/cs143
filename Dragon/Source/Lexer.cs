@@ -9,7 +9,7 @@ namespace Dragon
 {
     public class Tag
     {
-        public readonly static char
+        public const char
             AND     =   (char)256,
             BASIC   =   (char)257,
             BREAK   =   (char)258,
