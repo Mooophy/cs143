@@ -81,22 +81,31 @@ namespace Dragon
 
         //Stmt()
 
-        //public Stmt Assign()
-        //{
-        //    Stmt stmt;
-        //    var tok = _look;
+        public Stmt Assign()
+        {
+            Stmt stmt;
+            var tok = _look;
 
-        //    this.Match(Tag.ID);
-        //    var id = Top.Get(tok);
-        //    if (id == null)
-        //        this.Error(tok.ToString() + " undeclared");
+            this.Match(Tag.ID);
+            var id = Top.Get(tok);
+            if (id == null)
+                this.Error(tok.ToString() + " undeclared");
 
-        //    if(_look.TagValue == '=')
-        //    {
-        //        this.Move();
-        //        stmt = new Set(id,)
-        //    }
-        //}     need method Bool() to continue
+            if(_look.TagValue == '=')
+            {
+                this.Move();
+                stmt = new Set(id, this.Bool());
+            }
+            else 
+            {
+                Access x = this.Offset(id);
+                this.Match('=');
+                stmt = new SetElem(x, this.Bool());
+            }
+
+            this.Match(';');
+            return stmt;
+        }    
 
         public Expr Bool()
         {
