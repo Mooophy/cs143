@@ -97,5 +97,65 @@ namespace Dragon
         //        stmt = new Set(id,)
         //    }
         //}     need method Bool() to continue
+
+        public Expr Bool()
+        {
+            Expr expr = this.Join();
+            while(_look.TagValue == Tag.OR)
+            {
+                var tok = _look;
+                this.Move();
+                expr = new Or(tok, expr, this.Join());
+            }
+            return expr;
+        }
+
+        public Expr Join()
+        {
+            Expr expr = this.Equality();
+            while(_look.TagValue == Tag.AND)
+            {
+                var tok = _look;
+                this.Move();
+                expr = new And(tok, expr, this.Equality());
+            }
+            return expr;
+        }
+
+        public Expr Equality()
+        {
+            Expr expr = this.Rel();
+            while(_look.TagValue == Tag.EQ || _look.TagValue == Tag.NE)
+            {
+                var tok = _look;
+                this.Move();
+                expr = new Rel(tok, expr, this.Rel());
+            }
+            return expr;
+        }
+
+        public Expr Rel()
+        {
+            Expr expr = this.Expr();
+            if('<' == _look.TagValue || Tag.LE == _look.TagValue || Tag.GE == _look.TagValue || '>' == _look.TagValue)
+            {
+                Token tok = _look;
+                this.Move();
+                return new Rel(tok, expr, this.Expr());
+            }
+            return expr;
+        }
+
+        public Expr Expr()
+        {
+            Expr expr = this.Term();
+            while(_look.TagValue == '+' || _look.TagValue == '-')
+            {
+                Token tok = _look;
+                this.Move();
+                expr = new Arith(tok, expr, this.Term());
+            }
+            return expr;
+        }
     }
 }
