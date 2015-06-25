@@ -79,7 +79,70 @@ namespace Dragon
 
         //Stmts()
 
-        //Stmt()
+        public Stmt Stmt()
+        {
+            Expr expr;
+            Stmt s, s1, s2, savedStmt;
+            switch(_look.TagValue)
+            {
+                case ':':
+                    this.Move();
+                    return Dragon.Stmt.Null;
+
+                case Tag.IF:
+                    this.Match(Tag.IF);
+                    this.Match('(');
+                    expr = this.Bool();
+                    this.Match(')');
+                    
+                    s1 = this.Stmt();
+                    if (_look.TagValue != Tag.ELSE)
+                        return new If(expr, s1);
+
+                    this.Match(Tag.ELSE);
+                    s2 = this.Stmt();
+                    return new Else(expr, s1, s2);
+
+                case Tag.WHILE:
+                    var whileNode = new While();
+                    savedStmt = Dragon.Stmt.Enclosing;
+                    Dragon.Stmt.Enclosing = whileNode;
+                    this.Match(Tag.WHILE);
+                    this.Match('(');
+                    expr = this.Bool();
+                    this.Match(')');
+                    s1 = this.Stmt();
+                    whileNode.Init(expr, s1);
+                    Dragon.Stmt.Enclosing = savedStmt;
+                    return whileNode;
+
+                case Tag.DO:
+                    var doNode = new Do();
+                    savedStmt = Dragon.Stmt.Enclosing;
+                    Dragon.Stmt.Enclosing = doNode;
+                    this.Match(Tag.DO);
+                    s1 = this.Stmt();
+                    this.Match(Tag.WHILE);
+                    this.Match('(');
+                    expr = this.Bool();
+                    this.Match(')');
+                    this.Match(';');
+                    doNode.Init(s1, expr);
+                    Dragon.Stmt.Enclosing = savedStmt;
+                    return doNode;
+
+                case Tag.BREAK:
+                    this.Match(Tag.BREAK);
+                    this.Match(';');
+                    return new Break();
+
+                case '{':
+                    return this.Block();
+
+                default:
+                    return this.Assign();
+            }
+        }
 
         public Stmt Assign()
         {
