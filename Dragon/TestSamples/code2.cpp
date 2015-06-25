@@ -1,7 +1,8 @@
 {
-	int i = 42;
-	if(i > 0)
+	int i; 
+	float[100] a;
+	while(true)
 	{
-		i = i + 55;
+		do i = i + 1; while(a[i] < 42);
 	}
 }
