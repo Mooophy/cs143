@@ -39,9 +39,31 @@ namespace Dragon
             if (_look.TagValue == tag) this.Move();
             else this.Error("syntax error");
         }
+
+        public void Program()
+        {
+            Stmt s = this.Block();
+            int begin = s.NewLable();
+            int after = s.NewLable();
+            s.EmitLabel(begin);
+            s.Gen(begin, after);
+            s.EmitLabel(after);
+        }
         
-        //..
-        public void Declaration()
+        public Stmt Block()
+        {
+            this.Match('{');
+            Env savedEnv = this.Top;
+            this.Top = new Env(this.Top);
+
+            this.Declarations();
+            var s = this.Stmts();
+            this.Match('}');
+            this.Top = savedEnv;
+            return s;
+        }
+
+        public void Declarations()
         {
             while(_look.TagValue == Tag.BASIC)
             {
@@ -77,7 +99,13 @@ namespace Dragon
             return new Array(((Num)tok).Value, type);
         }
 
-        //Stmts()
+        public Stmt Stmts()
+        {
+            if (_look.TagValue == '}')
+                return Dragon.Stmt.Null;
+            else
+                return new Seq(this.Stmt(), this.Stmts());
+        }
 
         public Stmt Stmt()
         {
