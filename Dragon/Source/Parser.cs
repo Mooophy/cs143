@@ -110,7 +110,7 @@ namespace Dragon
         public Stmt Stmt()
         {
             Expr expr;
-            Stmt s, s1, s2, savedStmt;
+            Stmt s1, s2, savedStmt;
             switch(_look.TagValue)
             {
                 case ':':

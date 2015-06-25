@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Dragon
 {
@@ -10,6 +11,10 @@ namespace Dragon
     {
         static void Main(string[] args)
         {
+            var lex = new Lexer(new StreamReader(""));
+            var parse = new Parser(lex);
+            parse.Program();
+            Console.WriteLine();
         }
     }
 }
